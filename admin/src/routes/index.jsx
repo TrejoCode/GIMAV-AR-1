@@ -1,7 +1,7 @@
 /**
  *  @name: routes.jsx
- *  @version: 1.0.0
- *  @author: Sergio
+ *  @version: 1.0.1
+ *  @author: Sergio, Lucero
  *  @description: Manejo de todas las rutas de la aplicación
  * 	@process: 3
 */
@@ -12,7 +12,6 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 // Páginas
 import PageLogin from '../pages/login';
-import Page404 from '../pages/404';
 import PageParks from '../pages/parks';
 import PageParksAdd from '../pages/parksAdd';
 import PageQR from '../pages/qrs';
@@ -32,7 +31,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
                     return <Component { ...props } />;
                 } else {
                     return (
-                        <Redirect to = { { pathname: "/", state: { from: props.location } } } />
+                        <Redirect to = { { pathname: "/login", state: { from: props.location } } } />
                     );
                 }
             }
@@ -46,6 +45,7 @@ const Routes = () => (
             <div className="flex main">
                 <div className="column full">
                     <Switch>
+                        <Route path = "/" exact component = { PageLogin } />
                         <Route path = "/login" exact component = { PageLogin } />
                         <PrivateRoute path = "/parques" exact component = { PageParks } />
                         <PrivateRoute path = "/parques/nuevo" exact component = { PageParksAdd } />
@@ -54,7 +54,7 @@ const Routes = () => (
                         <PrivateRoute path = "/ar" exact component = { PageAR } />
                         <PrivateRoute path = "/usuarios" exact component = { PageUsers } />
                         <PrivateRoute path = "/usuarios/nuevo" exact component = { PageUsersAdd } />
-                        <Route component = { Page404 } />
+                        <Route component = { PageLogin } />
                     </Switch>
                 </div>
             </div>

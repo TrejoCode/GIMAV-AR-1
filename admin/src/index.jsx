@@ -1,7 +1,7 @@
 /**
  *  @name: index.jsx
- *  @version: 1.0.0
- *  @author:  Sergio
+ *  @version: 1.0.1
+ *  @author:  Sergio, Lucero
  *  @description: Punto de Entrada de React
  * 	@process: 1
 */

@@ -5,19 +5,20 @@
  *  @description: Página de iniciar sesión /login
 */
 
-import React, { useState } from 'react';
-import { Consumer } from '../context';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import cogoToast from 'cogo-toast';
+import React, { useState, useEffect } from 'react';
+import { Consumer }     from '../context';
+import Button           from '@material-ui/core/Button';
+import CssBaseline      from '@material-ui/core/CssBaseline';
+import TextField        from '@material-ui/core/TextField';
+import Typography       from '@material-ui/core/Typography';
+import { makeStyles }   from '@material-ui/core/styles';
+import Container        from '@material-ui/core/Container';
+import cogoToast        from 'cogo-toast';
 
 // HTTP Client
 import Request from '../utils/http';
 
+// Styles
 const useStyles = makeStyles(theme => ({
     login: {
         display: "flex",
@@ -40,14 +41,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const PageLogin = (props) => {    
 
-    const classes = useStyles();    
-    const [loginRequest, setLoginRequest] = useState({
-        loading: false,
-        error: false,
-        message: null
-    });
+const PageLogin = (props) => {
+
+    const classes = useStyles();
 
     /**
      * @name handleSubmit
@@ -55,7 +52,7 @@ const PageLogin = (props) => {
      */
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setLoginRequest({ loading: true });
+        cogoToast.loading('Validando usuario', 1500);
         const request = new Request();
         const data = {
             email: event.target.email.value,
@@ -63,7 +60,6 @@ const PageLogin = (props) => {
         };
         const { result, error } = await request.post('/users/login', data);
         if ( result && !result.error ) {
-            setLoginRequest({ loading: false });
             props.context.login({ user: result.user, auth: true });
             await props.context.loadUser();
             cogoToast.success("Acceso concedido");
@@ -71,10 +67,16 @@ const PageLogin = (props) => {
                 props.history.push('/tablero');
             }, 3000);
         } else {
-            setLoginRequest({ loading: false, error: true, message: error.message });
             cogoToast.error(error.message);
         }
     }
+
+    // Si existe sesión activa enviar al tablero
+    useEffect(() => {
+        if (window.localStorage.getItem("GIMAV_AR_Admin")) {
+            window.location = "/tablero";
+        }
+    });
 
     return(
         <div className = { classes.login }>

@@ -1,7 +1,7 @@
 /**
  *  users.js
  *  @version: 1.0.0
- *  @author: Sergio
+ *  @author: Sergio, Lucero
  *  @description: Manejador de ejecuciones del Context para Usuarios.
 */
 

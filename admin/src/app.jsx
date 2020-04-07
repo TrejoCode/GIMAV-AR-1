@@ -1,7 +1,7 @@
 /**
  *  @name: app.jsx
- *  @version: 1.0.0
- *  @author: Trejocode - Sergio
+ *  @version: 1.0.1
+ *  @author: Lucero - Sergio
  *  @description: Punto de Entrada de la aplicación
  * 	@process: 2
 */
